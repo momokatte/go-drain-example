@@ -28,11 +28,11 @@ func main() {
 	outWG.Add(1)
 	go func() {
 		if len(outFile) > 0 {
-			for err := drain.ChanToFile(outStrings, outFile); err != nil; {
+			if err := drain.ChanToFile(outStrings, outFile); err != nil {
 				panic(err)
 			}
 		} else {
-			for err := drain.ChanToStdout(outStrings); err != nil; {
+			if err := drain.ChanToStdout(outStrings); err != nil {
 				panic(err)
 			}
 		}
@@ -42,11 +42,11 @@ func main() {
 	inStrings := make(chan string, 200)
 	go func() {
 		if len(inFile) > 0 {
-			for err := drain.FileLinesToChan(inFile, inStrings); err != nil; {
+			if err := drain.FileLinesToChan(inFile, inStrings); err != nil {
 				panic(err)
 			}
 		} else {
-			for err := drain.StdinLinesToChan(inStrings); err != nil; {
+			if err := drain.StdinLinesToChan(inStrings); err != nil {
 				panic(err)
 			}
 		}
